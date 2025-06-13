@@ -52,6 +52,13 @@ async def root():
     </html>
     """
 
+# Catch accidental POST to `/` and guide user
+@app.post("/")
+async def fallback_post():
+    return {
+        "error": "❌ Invalid route. Please POST to /api/ instead."
+    }
+
 # Request/Response schemas
 class QueryRequest(BaseModel):
     question: str
