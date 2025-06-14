@@ -5,7 +5,6 @@ import sqlite3
 import numpy as np
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from typing import Optional, List
 import aiohttp
@@ -36,28 +35,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Root endpoint (homepage)
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    return """
-    <html>
-        <head>
-            <title>Project1 API</title>
-        </head>
-        <body>
-            <h1>🚀 Project1 FastAPI is running on Vercel!</h1>
-            <p>Use the <a href="/docs">/docs</a> to explore the API documentation.</p>
-        </body>
-    </html>
-    """
-
-# Catch accidental POST to `/` and guide user
-@app.post("/")
-async def fallback_post():
-    return {
-        "error": "❌ Invalid route. Please POST to /api/ instead."
-    }
 
 # Request/Response schemas
 class QueryRequest(BaseModel):
